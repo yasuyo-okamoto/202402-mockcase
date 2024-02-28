@@ -34,7 +34,7 @@
 ## 環境構築　　
 dockerビルド　 
   
-1. https://github.com/yasuyo-okamoto/mockcase2024.2-4.git  
+1. [https://github.com/yasuyo-okamoto/mockcase2024.2-4.git](https://github.com/yasuyo-okamoto/202402-mockcase.git)  
 2. docker-compose pu -d --build  
 *MySQLは、OSによって起動しない場合があるのでそれぞれのPCに合わせてdocker-compose.ymlファイルを編集してください  
 
