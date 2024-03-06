@@ -11,9 +11,11 @@ class RegisterUserController extends Controller
     return view('stamp');
   }
 
-  public function register()
+  public function register(Request $request)
   {
-    return view('register');
+    $register = $request->only(['name']);
+    return $register;
+    return $view('stamp', compact('register'));
   }
 
   public function login()

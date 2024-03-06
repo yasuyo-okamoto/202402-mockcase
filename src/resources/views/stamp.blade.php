@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
-<h1 class="stamp__title">○ さんお疲れ様です！</h1>
+<h1 class="stamp__title">
+  <input type="text" name="name" value="{{ $register['name'] }}" readonly />
+</h1>
   <form class="form__content" action="stamp" method="post">
   <div class="form__window">
     <div class="form__content">

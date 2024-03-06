@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,8 @@ Route::get('/', function () {
     return view('stamp');
 });
 
-Route::get('/register', function () {
-    return view('register');
-});
+Route::post('/register/',[RegisterUserController::class, '/']);
+
 
 Route::get('/login', function () {
     return view('login');

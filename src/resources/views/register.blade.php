@@ -7,7 +7,8 @@
 @section('content')
 <h1 class="register__title">会員登録</h1>
   <div class="form__window">
-  <form class="form__content" action="register" method="post">
+  <form class="form__content" action="/register/" method="post">
+    @csrf
     <div class="form__group">
       <input type="text" name="name" placeholder="名前">
     </div>
