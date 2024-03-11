@@ -16,7 +16,12 @@
         <ul class="header__nav--list">
           <li><a href="/">ホーム</a></li>
           <li><a href="/attendance">日付一覧</a></li>
-          <li><a href="/login">ログアウト</a></li>
+          <li>
+            <form class="form_logout" action="/logout" method="post">
+            @csrf
+              <button class="header-nav__button">ログアウト</button>
+            </form>
+          </li>
         </ul>
       </nav>
   </header>

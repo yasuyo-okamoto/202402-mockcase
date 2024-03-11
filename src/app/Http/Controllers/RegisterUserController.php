@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RegisterUser;
 use Illuminate\Http\Request;
 
 class RegisterUserController extends Controller
@@ -13,15 +14,10 @@ class RegisterUserController extends Controller
 
   public function register(Request $request)
   {
-    $register = $request->only(['name']);
-    return $register;
-    return $view('stamp', compact('register'));
-  }
-
-  public function login()
-  {
+    $register = $request->only(['name', 'email', 'password']);
     return view('login');
   }
+
 
   public function attendance()
   {

@@ -14,20 +14,13 @@ use App\Http\Controllers\RegisterUserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::middleware('auth')->group(function () {
+    Route::get('/', [RegisterUserController::class, 'stamp']);
+    });
 
-Route::get('/', function () {
-    return view('stamp');
-});
-
-Route::post('/register/',[RegisterUserController::class, '/']);
+Route::post('/register',[RegisterUserController::class, 'register']);
 
 
-Route::get('/login', function () {
-    return view('login');
-});
 
 Route::get('/attendance', function () {
     return view('attendance');

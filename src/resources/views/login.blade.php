@@ -7,9 +7,10 @@
 @section('content')
 <h1 class="login__title">ログイン</h1>
   <div class="form__window">
-    <form class="form__content" action="login" method="post">
+    <form class="form__content" action="/login" method="post">
+      @csrf
       <div class="form__group">
-        <input type="email" name="email" placeholder="メールアドレス">
+        <input type="email" name="email" value="{{ old('email') }}" placeholder="メールアドレス">
       </div>
       <div class="form__group">
         <input type="password" name="password" placeholder="パスワード">
