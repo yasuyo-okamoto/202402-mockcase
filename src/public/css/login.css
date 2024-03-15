@@ -10,11 +10,12 @@
     transform: translate(-50%);
     height: 100px;
     align-items: center;
-    
+    padding: 20px 20px;
 }
 
 .form__window {
     height: 100px;
+    margin-bottom: 340px;
 }
 
 .form__group {
@@ -63,7 +64,6 @@ input {
     text-align: center;
     font-size: 10px;
     color: #585858;
-    margin-top: 40px;
     margin-bottom: 0;
 }
 
@@ -74,10 +74,16 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 270px;
+    margin-bottom: 500px;
 }
 
 .register__link:visited {
     color: #7e0404;
 }
 
+.error {
+    color: red;
+    font-size: 10px;
+    display: flex;
+    padding-left: 20px;
+}

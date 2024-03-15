@@ -13,15 +13,10 @@ use App\Http\Controllers\RegisterUserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/register', [RegisterUserController::class, 'store']);
+
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [RegisterUserController::class, 'stamp']);
+    Route::get('/', [RegisterUserController::class, 'index']);
+    Route::get('/attendance', [ContactController::class, 'search']);
     });
-
-Route::post('/register',[RegisterUserController::class, 'register']);
-
-
-
-Route::get('/attendance', function () {
-    return view('attendance');
-});

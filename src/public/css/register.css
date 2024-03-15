@@ -15,6 +15,7 @@
 
 .form__window {
     height: 240px;
+    margin-bottom: 200px;
 }
 
 .form__group {
@@ -78,4 +79,11 @@ input {
 
 .login__link:visited {
     color: #7e0404;
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+    display: flex;
+    padding-left: 20px;
 }

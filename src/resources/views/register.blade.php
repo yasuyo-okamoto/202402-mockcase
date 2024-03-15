@@ -9,6 +9,18 @@
   <div class="form__window">
   <form class="form__content" action="/register" method="post">
     @csrf
+    @error('name')
+          <div class="error">{{ $message }}</div>
+    @enderror
+    @error('email')
+          <div class="error">{{ $message }}</div>
+    @enderror
+    @error('password')
+          <div class="error">{{ $message }}</div>
+    @enderror
+    @error('password')
+          <div class="error">{{ $message }}</div>
+    @enderror
     <div class="form__group">
       <input type="text" name="name" value="{{ old('name') }}" placeholder="名前">
     </div>
@@ -24,10 +36,10 @@
     <div class="form__button">
       <button class="form__button--content" type="submit">会員登録</button>
     </div>
+    <div class="login__pages">
+      <p class="login__pages--text">アカウントをお持ちの方はこちらから</p>
+      <a class="login__link" href="/login">ログイン</a>
+    </div>
   </form>
-  </div>
-  <div class="login__pages">
-    <p class="login__pages--text">アカウントをお持ちの方はこちらから</p>
-    <a class="login__link" href="/login">ログイン</a>
   </div>
 @endsection
