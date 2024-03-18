@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterUserController;
+use App\Http\Controllers\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +15,10 @@ use App\Http\Controllers\RegisterUserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('/register', [RegisterUserController::class, 'store']);
+
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [RegisterUserController::class, 'index']);
-    Route::get('/attendance', [ContactController::class, 'search']);
     });
+
