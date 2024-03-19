@@ -13,8 +13,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use App\Http\Requests\LoginRequest;
-use App\Http\Controllers\RegisterController;
-use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -23,10 +23,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(
-            RegisteredUserController::class,
-            RegisterController::class
-        );
+        //
     }
 
     /**
@@ -36,9 +33,11 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::createUsersUsing(CreateNewUser::class);
 
-        Fortify::registerView(function () {
-            return view('auth.register');
-        });
+        //Fortify::registerView(function () {
+            //return view('auth.register');
+        //});
+
+        Fortify::registerView(RegisteredUserController::class, 'registered');
 
         Fortify::loginView(function () {
             return view('auth.login');
@@ -50,7 +49,6 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(10)->by($email . $request->ip());
         });
 
-        $this->app->bind(FortifyLoginRequest::class, RegisterRequest::class);
     }
     }
 

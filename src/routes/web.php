@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterUserController;
-use App\Http\Controllers\RegisterController;
+
 
 
 /*
@@ -16,6 +16,7 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
+//Route::get('/register', [RegisterUserController::class, '']);
 
 
 Route::middleware('auth')->group(function () {
