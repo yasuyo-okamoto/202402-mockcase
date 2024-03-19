@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterUserController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 
 
@@ -16,10 +17,15 @@ use App\Http\Controllers\RegisterUserController;
 |
 */
 
-//Route::get('/register', [RegisterUserController::class, '']);
+
+//Route::get('/register',[RegisteredUserController::class, 'registered']);
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [RegisterUserController::class, 'index']);
     });
 
+Route::post('/work/start', 'WorkController@startWork');
+Route::post('/work/end', 'WorkController@endWork');
+Route::post('/break/start', 'WorkController@startBreak');
+Route::post('/break/end', 'WorkController@endBreak');

@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Illuminate\Support\Facades\Event;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -33,11 +35,13 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::createUsersUsing(CreateNewUser::class);
 
-        //Fortify::registerView(function () {
-            //return view('auth.register');
-        //});
+        Fortify::registerView(function () {
+            return view('auth.register');
+        });
 
-        Fortify::registerView(RegisteredUserController::class, 'registered');
+        Event::listen(Registered::class, function (Registered $event) {
+            return app(RegisteredUserController::class)->registered($event->request, $event->user);
+        });
 
         Fortify::loginView(function () {
             return view('auth.login');

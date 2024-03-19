@@ -53,6 +53,7 @@ li form button {
     margin-left: 20px;
     color: #000;
     font-size: medium;
+    margin-top: 0;
 }
 
 li form button:hover {
