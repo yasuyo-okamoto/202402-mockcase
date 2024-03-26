@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterUserController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\WorkController;
+use App\Http\Controllers\AttendController;
+
 
 
 
@@ -21,11 +23,15 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 //Route::get('/register',[RegisteredUserController::class, 'registered']);
 
 
+//Route::get('/register', [Controller::class, 'authenticated'])->name('auth.login');
+
 Route::middleware('auth')->group(function () {
     Route::get('/', [RegisterUserController::class, 'index']);
+    Route::post('/work/start', 'WorkController@ WorkStart');
+    Route::post('/work/end','WorkController@WorkEnd');
+    Route::post('/break/start', 'WorkController@BreakStart');
+    Route::post('/break/end', 'WorkController@BreakEnd');
+    Route::get('/attendance', [AttendController::class, 'admin']);
+    //Route::get('/attendance', [AttendController::class, 'search']);
     });
 
-Route::post('/work/start', 'WorkController@startWork');
-Route::post('/work/end', 'WorkController@endWork');
-Route::post('/break/start', 'WorkController@startBreak');
-Route::post('/break/end', 'WorkController@endBreak');

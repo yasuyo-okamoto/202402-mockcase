@@ -3,53 +3,65 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Work;
-use App\Models\Breaks;
+use App\Models\Worklog;
+use App\Models\Breaklog;
 
 class WorkController extends Controller
 {
-    public function Workstart(Request $request)
+    public function WorkStart(Request $request)
     {
-        $work = new Work();
+        $work = new Worklog();
         $work->user_id = auth()->user()->id;
-        $work->start_time = now();
+        $work->workstart = now();
         $work->save();
 
         return redirect()->back();
     }
 
-    public function endWork(Request $request)
+    public function WorkEnd(Request $request)
     {
-        $workLog = WorkLog::where('user_id', auth()->user()->id)->latest()->first();
-        $workLog->end_time = now();
-        $workLog->save();
+        $work = Worklog::where('user_id', auth()->user()->id)
+        ->whereNull('workend')
+        ->latest()
+        -> first();
+
+        if ($work) {
+            $work->end_time = now();
+            $work->save();
+        }
 
         return redirect()->back();
     }
 
-    public function startBreak(Request $request)
+    public function BreakStart(Request $request)
     {
-        $workLog = WorkLog::where('user_id', auth()->user()->id)->latest()->first();
-        $breakLog = new BreakLog();
-        $breakLog->work_log_id = $workLog->id;
-        $breakLog->start_time = now();
-        $breakLog->save();
+        $work = Worklog::where('work_id', auth()->user()->id)
+            ->whereNull('breakend')
+            ->latest()
+            ->first();
+
+        if ($work) {
+            $break = new Breaklog();
+            $break->work_id = $work->id;
+            $break->breakstart = now();
+            $break->save();
+        }
 
         return redirect()->back();
     }
-
-    public function endBreak(Request $request)
+    public function BreakEnd(Request $request)
     {
-        $breakLog = BreakLog::where('work_log_id', function($query) {
-            $query->select('id')
-                  ->from('work_logs')
-                  ->where('user_id', auth()->user()->id)
-                  ->latest()
-                  ->limit(1);
-        })->latest()->first();
+        $break = Breaklog::whereHas('work', function ($query) {
+            $query->where('work_id', auth()->user()->id)
+                ->whereNull('breakend');
+        })
+        ->latest()
+        ->first();
 
-        $breakLog->end_time = now();
-        $breakLog->save();
+        if ($break) {
+            $break->breakend = now();
+            $break->save();
+        }
 
         return redirect()->back();
     }

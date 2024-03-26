@@ -13,9 +13,12 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use App\Http\Requests\LoginRequest;
-use App\Http\Controllers\Auth\RegisteredUserController;
+//use App\Http\Controllers\Auth\loginController;
 use Laravel\Fortify\Contracts\LoginResponse;
-use Illuminate\Support\Facades\Event;
+
+use Laravel\Fortify\Contracts\RegisterResponse;
+
+
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -25,8 +28,9 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+       //
     }
+
 
     /**
      * Bootstrap any application services.
@@ -39,10 +43,6 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
-        Event::listen(Registered::class, function (Registered $event) {
-            return app(RegisteredUserController::class)->registered($event->request, $event->user);
-        });
-
         Fortify::loginView(function () {
             return view('auth.login');
         });
@@ -53,6 +53,7 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(10)->by($email . $request->ip());
         });
 
-    }
+
     }
 
+}

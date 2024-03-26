@@ -43,7 +43,7 @@ li a:hover {
     background-color: #d6d6d6;
 }
 
-li form button {
+li form .header-nav__button {
     background-color: transparent;
     border: none;
     cursor: pointer;
