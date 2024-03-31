@@ -5,24 +5,18 @@
 @endsection
 
 @section('content')
-<div id="current__date">
-  @foreach ($attendances as $attendance)
-    <div>{{ $attendance->date }}</div>
-  @endforeach
-  {{ $attendances->links() }}
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dateElements = document.querySelectorAll('.event-date');
+<div class="date__page">
+        @if($worklogs->total() > 0)
+            <a href="{{ route('attendance', ['date' => \Carbon\Carbon::parse($worklogs[0]->date)->subDay()->format('Y-m-d')]) }}">&lt;</a>
 
-        dateElements.forEach(function(element) {
-            element.addEventListener('click', function() {
-                const selectedDate = this.textContent.trim();
-                alert('Selected date: ' + selectedDate);
-            });
-        });
-    });
-  </script>
+        @if($worklogs->total() > 0)
+            <span>{{ $worklogs[0]->date }}</span>
+        @endif
+
+            <a href="{{ route('attendance', ['date' => \Carbon\Carbon::parse($worklogs[count($worklogs) - 1]->date)->addDay()->format('Y-m-d')]) }}">&gt;</a>
+        @endif
 </div>
+
 <div class="attendance__table">
   <table class="attendance__table--content">
     <tr>
@@ -32,38 +26,21 @@
       <th>休憩時間</th>
       <th>勤務時間</th>
     </tr>
-    @foreach($attendances as $attendance)
+    <!-- 勤務情報を表示 -->
+    @foreach($worklogs as $worklog)
     <tr>
-      <td>{{ $attendance->name }}</td>
-      <td>{{ $attendance->workstart }}</td>
-      <td>{{ $attendance->workend }}</td>
-      <td>{{ $attendance->breakstart }} - {{ $attendance->breakend }}</td>
-      <td>{{ $attendance->work_duration }}</td>
+      <td>{{ $worklog->user->name }}</td>
+      <td>{{ $worklog->workstart }}</td>
+      <td>{{ $worklog->workend }}</td>
+      <td>{{ gmdate('H:i:s', $worklog->total_break_time) }}</td>
+      <td>{{ gmdate('H:i:s', $worklog->total_work_time) }}</td>
     </tr>
     @endforeach
-
-
   </table>
 </div>
-@if($attendances->total() > $attendances->perPage())
-<nav class="page__navigation">
-  <ul class="pagination">
-    <li class="page-item {{ $attendances->onFirstPage() ? 'disabled' : '' }}">
-      <a href="{{ $attendances->previousPageUrl() }}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    @for($i = 1; $i <= $attendances->lastPage(); $i++)
-    <li class="page-item {{ $attendances->currentPage() == $i ? 'active' : '' }}">
-      <a  href="{{ $attendances->url($i) }}">{{ $i }}</a>
-    </li>
-    @endfor
-    <li class="page-item {{ $attendances->currentPage() == $attendances->lastPage() ? 'disabled' : '' }}">
-      <a href="{{ $attendances->nextPageUrl() }}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-@endif
+
+<div class="pagination-container">
+    {{ $worklogs->links('vendor.simple-boostrap-4') }}
+</div>
+
 @endsection

@@ -27,21 +27,32 @@
     display: flex;
 }
 
-li a {
-    text-decoration: none;
-    margin-left: 20px;
-    color: #000;
-}
-
-li a:hover {
-    color: blue;
-    background-color: #d6d6d6;
-}
-
-#current__date {
+.date__page {
     margin-top: 50px;
-    font-size: medium;
     text-align: center;
+}
+
+.date__page span {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.date__page a {
+    cursor: pointer;
+    text-align: center;
+    background: #ffffff;
+    color: blue;
+    line-height: 1em;
+    border: 1px solid blue;
+    font-size: 15pt;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+.date__page a:hover{
+    color: #ffffff;
+    background: #00007f;
 }
 
 .attendance__table {
@@ -63,37 +74,3 @@ td {
     border-top: solid 0.5px #000;
 }
 
-.page__navigation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-    box-sizing: border-box;
-    background-color: #d6d6d6;
-    gap: 1rem;
-}
-
-.pagination {
-    display: flex;
-}
-
-.pagination a {
-    display: inline-block;
-    color: blue;
-    background-color: #fff;
-    text-decoration: none;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    margin-left: 2px;
-}
-
-.pagination span {
-    line-height: 40px;
-}
-
-.pagination a:hover {
-    background-color: blue;
-    color: white;
-}

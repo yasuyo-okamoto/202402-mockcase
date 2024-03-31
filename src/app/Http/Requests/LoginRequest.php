@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 
 class LoginRequest extends FormRequest
@@ -14,7 +15,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,6 +28,19 @@ class LoginRequest extends FormRequest
         return [
             'email' => 'required | email',
             'password' => 'required'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.required' => 'メールアドレスは必須です。',
+            'password.required' => 'パスワードは必須です。'
         ];
     }
 }

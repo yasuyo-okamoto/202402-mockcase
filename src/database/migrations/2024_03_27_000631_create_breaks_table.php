@@ -14,12 +14,14 @@ class CreateBreaksTable extends Migration
     public function up()
     {
         Schema::create('breaks', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('work_id');
-            $table->dateTime('breakstart');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('job_id');
+            $table->dateTime('breakstart')->nullable();
             $table->dateTime('breakend')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
+
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('restrict');
         });
     }
 

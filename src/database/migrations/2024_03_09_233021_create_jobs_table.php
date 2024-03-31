@@ -14,13 +14,17 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->date('date');
-            $table->dateTime('workstart');
+            $table->dateTime('workstart')->nullable();
             $table->dateTime('workend')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at') ->useCurrent()->nullable();
+
+            // Foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+
         });
     }
 

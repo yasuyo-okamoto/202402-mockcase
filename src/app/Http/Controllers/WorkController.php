@@ -5,64 +5,120 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Worklog;
 use App\Models\Breaklog;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class WorkController extends Controller
 {
-    public function WorkStart(Request $request)
+  // Work Start メソッド
+    public function workStart(Request $request)
     {
-        $work = new Worklog();
-        $work->user_id = auth()->user()->id;
-        $work->workstart = now();
-        $work->save();
+        // ログイン中のユーザーを取得
+        $user = Auth::user();
 
-        return redirect()->back();
-    }
+        // 今日の日付を取得
+        $date = Carbon::today();
 
-    public function WorkEnd(Request $request)
-    {
-        $work = Worklog::where('user_id', auth()->user()->id)
-        ->whereNull('workend')
-        ->latest()
-        -> first();
+        // 今日の日付に対する Worklog を検索
+        $workLog = Worklog::where('user_id', $user->id)
+                          ->whereDate('date', $date)
+                          ->first();
 
-        if ($work) {
-            $work->end_time = now();
-            $work->save();
+        // すでに Worklog が存在する場合は何もしない
+        if ($workLog) {
+            return redirect()->back()->with('error', 'Work already started for today.');
         }
 
-        return redirect()->back();
+        // Worklog を作成
+        Worklog::create([
+            'user_id' => $user->id,
+            'date' => $date,
+            'workstart' => Carbon::now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Work started successfully.');
     }
 
-    public function BreakStart(Request $request)
+  // Work End メソッド
+    public function workEnd(Request $request)
     {
-        $work = Worklog::where('work_id', auth()->user()->id)
-            ->whereNull('breakend')
-            ->latest()
-            ->first();
+        // ログイン中のユーザーを取得
+        $user = Auth::user();
 
-        if ($work) {
-            $break = new Breaklog();
-            $break->work_id = $work->id;
-            $break->breakstart = now();
-            $break->save();
+        // 今日の日付を取得
+        $date = Carbon::today();
+
+        // 今日の日付に対する Worklog を取得
+        $workLog = Worklog::where('user_id', $user->id)
+                          ->whereDate('date', $date)
+                          ->first();
+
+        // Worklog が存在しない場合は何もしない
+        if (!$workLog) {
+            return redirect()->back()->with('error', 'Work not started for today.');
         }
 
-        return redirect()->back();
+        // Worklog の workend を更新
+        $workLog->update([
+            'workend' => Carbon::now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Work ended successfully.');
     }
-    public function BreakEnd(Request $request)
-    {
-        $break = Breaklog::whereHas('work', function ($query) {
-            $query->where('work_id', auth()->user()->id)
-                ->whereNull('breakend');
-        })
-        ->latest()
-        ->first();
 
-        if ($break) {
-            $break->breakend = now();
-            $break->save();
+  // Break Start メソッド
+    public function breakStart(Request $request)
+    {
+        // ログイン中のユーザーを取得
+        $user = Auth::user();
+
+        // 今日の日付を取得
+        $date = Carbon::today();
+
+        // 今日の日付に対する Worklog を取得
+        $workLog = Worklog::where('user_id', $user->id)
+                          ->whereDate('date', $date)
+                          ->first();
+
+        // Worklog が存在しない場合は何もしない
+        if (!$workLog) {
+            return redirect()->back()->with('error', 'Work not started for today.');
         }
 
-        return redirect()->back();
+        // Breaklog を作成
+        Breaklog::create([
+            'job_id' => $workLog->id,
+            'breakstart' => Carbon::now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Break started successfully.');
+    }
+
+  // Break End メソッド
+    public function breakEnd(Request $request)
+    {
+        // ログイン中のユーザーを取得
+        $user = Auth::user();
+
+        // 今日の日付を取得
+        $date = Carbon::today();
+
+        // 今日の日付に対する Worklog を取得
+        $workLog = Worklog::where('user_id', $user->id)
+                          ->whereDate('date', $date)
+                          ->first();
+
+        // Worklog が存在しない場合は何もしない
+        if (!$workLog) {
+            return redirect()->back()->with('error', 'Work not started for today.');
+        }
+
+        // Breaklog を作成
+        Breaklog::create([
+            'job_id' => $workLog->id,
+            'breakend' => Carbon::now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Break ended successfully.');
     }
 }

@@ -7,15 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Worklog extends Model
 {
-    use HasFactory;
     protected $table = 'jobs';
-    // 'jobs' テーブルを使用することを明示
-    protected $fillable = ['user_id', 'workstart', 'workend'];
-    // 入力可能なカラムを指定
+
+    protected $fillable = [
+        'user_id',
+        'date',
+        'workstart',
+        'workend',
+    ];
 
     //このモデルのリレーション定義
     public function breaks()
     {
-        return $this->hasMany(BreakLog::class, 'work_id');
+        return $this->hasMany(BreakLog::class, 'job_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
