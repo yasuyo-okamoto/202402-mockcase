@@ -1,0 +1,63 @@
+.user__page {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.user__page span {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.user__page a {
+    cursor: pointer;
+    text-align: center;
+    background: #ffffff;
+    color: blue;
+    line-height: 1em;
+    border: 1px solid blue;
+    font-size: 15pt;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+.user__page a:hover {
+    color: #ffffff;
+    background: #00007f;
+}
+
+.userlist__table {
+    width: 800px;
+    margin: 20px auto;
+}
+
+.userlist__table--content {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    border-spacing: 0;
+    border-top: solid 1px #000;
+}
+
+.userlist__table a {
+    cursor: pointer;
+    text-align: center;
+    background: #ffffff;
+    color: blue;
+    line-height: 1em;
+    border: 1px solid blue;
+    font-size: 10pt;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+.userlist__table a:hover {
+    color: #ffffff;
+    background: #00007f;
+}
+
+th,
+td {
+    padding: 15px 10px;
+    border-top: solid 0.5px #000;
+}

@@ -33,24 +33,48 @@ class AttendController extends Controller
             $worklog->user_name = $worklog->user->name;
 
         // 休憩時間を計算
-        $breaks = $worklog->breaks;
         $totalBreakTime = 0;
-        foreach ($breaks as $break) {
+        foreach ($worklog->breaks as $break) {
+        if ($break->breakstart && $break->breakend) {
         $breakStart = strtotime($break->breakstart);
         $breakEnd = strtotime($break->breakend);
+
         // 休憩時間を加算
         $totalBreakTime += $breakEnd - $breakStart;
+        }
         }
         $worklog->total_break_time = $totalBreakTime;
 
         }
 
-            // 名前を取得する
-            //$userName = User::find($worklog->user_id)->name;
-            //$worklog->user_name = $userName;
-
 
         // ページネーション用のビューを返す
         return view('attendance', compact('worklogs'));
     }
+
+
+
+    public function index(Request $request)
+    {
+    // すべてのユーザーを取得
+    $users = User::orderBy('name', 'asc')->paginate(5); // ページあたりの表示数は適宜変更してください
+
+    return view('userlist', compact('users'));
+    }
+
+    public function show($alphabet)
+    {
+        // あ行から始まるユーザーをページネーションを適用して取得
+        $users = User::where('name', 'like', $alphabet . '%')->paginate(10);
+
+        // ユーザーに関連する勤務情報を取得
+        $worklogs = Worklog::where('user_id', $user->id)->get();
+
+        // ユーザー情報をビューに渡して表示
+        return view('user.list', compact('user'));
+    }
+
+
+
+
 }

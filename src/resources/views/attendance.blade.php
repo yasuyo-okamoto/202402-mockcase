@@ -32,15 +32,16 @@
       <td>{{ $worklog->user->name }}</td>
       <td>{{ $worklog->workstart }}</td>
       <td>{{ $worklog->workend }}</td>
+      <!--<td>{{ gmdate('H:i:s', $worklog->breakstart) }}</td>-->
       <td>{{ gmdate('H:i:s', $worklog->total_break_time) }}</td>
-      <td>{{ gmdate('H:i:s', $worklog->total_work_time) }}</td>
+      <td>{{ gmdate('H:i:s', $worklog->total_work_time - $worklog->total_break_time) }}</td>
     </tr>
     @endforeach
   </table>
 </div>
 
 <div class="pagination-container">
-    {{ $worklogs->links('vendor.simple-boostrap-4') }}
+    {{ $worklogs->links('vendor.pagination.costom') }}
 </div>
 
 @endsection

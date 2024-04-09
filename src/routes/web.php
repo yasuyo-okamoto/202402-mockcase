@@ -59,6 +59,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/break/end', [WorkController::class, 'breakEnd'])->name('break.end');
 
     Route::get('/attendance', [AttendController::class, 'admin'])->name('attendance');
+
+    Route::get('/userlist', [AttendController::class, 'index'])->name('userlist');
+
+    Route::get('/users/{id}', [AttendController::class, 'show'])->name('user.list');
 });
 
 

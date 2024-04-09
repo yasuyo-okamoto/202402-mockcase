@@ -22,8 +22,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // メール認証を送信
+        $user->sendEmailVerificationNotification();
+
         // ログイン画面にリダイレクト
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', '会員登録が完了しました。メールを確認してアカウントを有効化してください。');
     }
 }
 
